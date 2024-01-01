@@ -100,3 +100,19 @@ input[type="text"] {
   color: #576366;
   font-size: 14px;
 }
+
+.success{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  color: green;
+  font-weight: bold;
+}
+
+.error{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  color: rgb(236, 40, 40);
+  font-weight: bold;
+}

@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import './LinkTrackerSection.css'
+import LinkPool from '../LinkPool/LinkPool';
+import request from '../../request/request';
 
+
+export const statusContext = createContext();
 
 function LinkTrackerSection() {
 
     const [sponseredPost, setSponseredPost] = useState("");
     const [inputFields, setInputFields] = useState([{ value: '' }]);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
+
+    
 
     const handleAddField = () => {
         if (inputFields.length < 5) {
@@ -29,8 +37,38 @@ function LinkTrackerSection() {
         setSponseredPost(event.target.value)
     }
 
-    const handleSubmitToPool=(e) =>{
+    const handleSubmitToPool = async (e) => {
+
+        const data = {
+
+            sponsoredLink: sponseredPost,
+            backlinks: inputFields.map(field => field.value)
+        };
+
+        const response = await request.addLinks(data);
+
+        if (response.data.status == 'ok') {
+            setSuccess(true);
+
+            setTimeout(() => {
+                setSuccess(false);
+            }, 5000);
+
+        } else {
+            setError(response.data.message)
+            setTimeout(() => {
+                setError(null);
+            }, 5000);
+        }
+
+        console.log(response);
+
     }
+
+    useEffect(() => {
+        // Clean up the timeout when the component unmounts
+        return () => clearTimeout();
+    }, []);
 
     return (
         <>
@@ -82,11 +120,23 @@ function LinkTrackerSection() {
                     </div>
                 </div>
             </div>
-           <div className='submit-btn'>
-            <button type="button" className='subbtn' onClick={handleSubmitToPool}>
-                Submit to Pool
-            </button>
+            <div className='submit-btn'>
+
+                <button type="button" className='subbtn' onClick={handleSubmitToPool}>
+                    Submit to Pool
+                </button>
+
             </div>
+
+            {success && <div className='success'>Links added to a pool successfully!</div>}
+            {error && <div className='error'>{error}</div>}
+
+            <div>
+
+            </div>
+            <statusContext.Provider value={success}>
+                <LinkPool />
+            </statusContext.Provider>
         </>
     )
 }
