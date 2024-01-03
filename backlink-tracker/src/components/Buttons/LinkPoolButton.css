@@ -1,0 +1,23 @@
+.linkpool-btn{
+
+    /* border: 1px solid #27ae60; */
+    border-radius: 5px;
+    padding: 0.7rem;
+    color: #27ae60;
+    font-weight:600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background-color: #d2efde;
+}
+
+.linkpool-btn:hover{
+
+    transform: scale(1.1);
+}
+
+
+.data-para-keywords{
+   
+    color: rgb(47, 100, 169);
+    font-weight:500;
+}
