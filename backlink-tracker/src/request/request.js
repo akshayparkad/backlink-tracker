@@ -9,13 +9,9 @@ const request = {
 
         try {
             const response = await axios.post('/addLinks', jsonData);
-
             return response;
-
         } catch (error) {
-
             console.log(error);
-
             return error.response;
 
         }
@@ -24,27 +20,28 @@ const request = {
     getLinks: async () => {
 
         try {
-
             const response = await axios.get('/links');
-
             return response;
-
         } catch (error) {
-
             return error.response;
         }
-
     },
 
     deleteLink: async (id) => {
 
         try {
-
             const response = await axios.delete(`/links/${id}`);
-            
             return response;
         } catch (error) {
+            return error.response;
+        }
+    },
 
+    checkAvailability: async(backlinks) =>{
+        try {
+            const response = await axios.post('/checkAvailability', backlinks);
+            return response;
+        }catch(error){
             return error.response;
         }
     }

@@ -1,7 +1,8 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import './LinkTrackerSection.css'
 import LinkPool from '../LinkPool/LinkPool';
 import request from '../../request/request';
+import { DeleteContext } from '../../hooks/DeleteContext';
 
 
 export const statusContext = createContext();
@@ -12,8 +13,9 @@ function LinkTrackerSection() {
     const [inputFields, setInputFields] = useState([{ value: '' }]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
-
     
+
+    const {deleteStatusText} = useContext(DeleteContext);
 
     const handleAddField = () => {
         if (inputFields.length < 5) {
@@ -65,13 +67,17 @@ function LinkTrackerSection() {
 
     }
 
+
     useEffect(() => {
         // Clean up the timeout when the component unmounts
         return () => clearTimeout();
-    }, []);
+    }, [deleteStatusText]);
 
+    console.log(deleteStatusText);
+    
     return (
         <>
+        <div className='forms-and-btn-container'>
 
             <div className='form-label'>
 
@@ -130,13 +136,16 @@ function LinkTrackerSection() {
 
             {success && <div className='success'>Links added to a pool successfully!</div>}
             {error && <div className='error'>{error}</div>}
+            {deleteStatusText && <div className='error'>{deleteStatusText}</div>}
 
             <div>
 
             </div>
-            <statusContext.Provider value={success}>
-                <LinkPool />
-            </statusContext.Provider>
+            </div>
+
+                <statusContext.Provider value={success}>
+                    <LinkPool />
+                </statusContext.Provider>
         </>
     )
 }

@@ -1,9 +1,12 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import request from '../../request/request';
+import { DeleteContext } from '../../hooks/DeleteContext';
 
 
 function RemoveButton({ text, id, setDeleteStatus, deleteStatus }) {
 
+
+  const {setDeleteStatusText} = useContext(DeleteContext);
 
   const buttonStyle = {
     backgroundColor: 'red',
@@ -20,15 +23,24 @@ function RemoveButton({ text, id, setDeleteStatus, deleteStatus }) {
   const handleDelete = async (id) => {
 
     const response = await request.deleteLink(id);
+    //console.log(response.data.message);
+
+    setDeleteStatusText(response.data.message);
 
     setDeleteStatus(!deleteStatus);
-  } 
+
+    setTimeout(() => {
+      setDeleteStatusText(null);
+  }, 3000);
+
+  }
 
   return (
 
-    <button style={buttonStyle} onClick={() => handleDelete(id)}>
-      {text}
-    </button>
+      <button style={buttonStyle} onClick={() => handleDelete(id)}>
+        {text}
+      </button>
+
   )
 }
 

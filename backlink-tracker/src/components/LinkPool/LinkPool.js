@@ -4,11 +4,12 @@ import LinkPoolButton from '../Buttons/LinkPoolButton'
 import RemoveButton from '../Buttons/RemoveButton';
 import request from '../../request/request';
 import { statusContext } from '../LinkTracker/LinkTrackerSection';
+import TruncateString from '../TruncateString/TruncateString';
 
 function LinkPool() {
 
     const [links, setLinks] = useState([]);
-    const [deleteStatus, setDeleteStatus] = useState();
+    const [deleteStatus, setDeleteStatus] = useState(false);
 
     const status = useContext(statusContext)
 
@@ -26,29 +27,28 @@ function LinkPool() {
     }, [status, deleteStatus]);
 
 
-    const handleCheckAvailability = () => {
-
-    }
-
     return (
-        <>
+        <div className='all-links'>
 
             {links.map((item) => {
 
                 return (
                     <>
-                    <div className='link-container'>
+                        <div className='link-container'>
+                            <div className='sponsored-link-single'>
 
-                        {item.sponsoredLink}
+                            <TruncateString originalString={item.sponsoredLink} maxLength={50} />
 
-                        <LinkPoolButton text={`Backlinks - ${item.backlinks.length}`} />
+                            </div>
 
-                        <LinkPoolButton text={'Check Availability'} onClick={handleCheckAvailability} />
+                            {/* <LinkPoolButton text={`Backlinks - ${item.backlinks.length}`} /> */}
 
-                        <RemoveButton text={'X'} id={item._id} setDeleteStatus={setDeleteStatus} deleteStatus={deleteStatus} />
+                            <LinkPoolButton text={'Check Availability'} backlinks ={item} />
 
-                    </div>
-                    {/* <hr style={{ color: 'grey', width: '75%' }} /> */}
+                            <RemoveButton text={'X'} id={item._id} setDeleteStatus={setDeleteStatus} deleteStatus={deleteStatus} />
+
+                        </div>
+                        <hr className='horizontal-line-betw-links' />
                     </>
 
                 )
@@ -57,9 +57,9 @@ function LinkPool() {
 
             }
 
-            
 
-        </>
+
+        </div>
     )
 }
 

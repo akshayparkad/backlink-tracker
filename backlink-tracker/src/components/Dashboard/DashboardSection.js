@@ -1,13 +1,15 @@
 import React from 'react'
 import LinkTrackerSection from '../LinkTracker/LinkTrackerSection'
+import './DashboardSection.css'
 
 function DashboardSection() {
 
-  return(
+  return (
+    <div className='dashboard-container'>
 
-    <>
-      <LinkTrackerSection/>
-    </>
+        <LinkTrackerSection />
+  
+    </div>
   )
 }
 

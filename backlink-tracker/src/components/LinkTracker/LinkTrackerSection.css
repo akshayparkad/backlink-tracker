@@ -1,8 +1,24 @@
+.forms-and-btn-container{
+
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+  width: 75%;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(230, 227, 227);
+  
+
+}
+
 .all-forms{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
+  
 }
 
 .form-label{
@@ -116,3 +132,4 @@ input[type="text"] {
   color: rgb(236, 40, 40);
   font-weight: bold;
 }
+
