@@ -1,18 +1,25 @@
 import React, { useState } from 'react'
 import './LinkPoolButton.css'
 import request from '../../request/request'
+import { FallingLines } from 'react-loader-spinner'
+
 
 function LinkPoolButton({ text, backlinks }) {
 
-    const [available, setAvailable] = useState(false);
     const [keywordsData, setKeywordsData] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handlePoolButton = async () => {
 
-        const response = await request.checkAvailability(backlinks);
+        if (keywordsData.length === 0) {
 
-        if(response.status == 500){
+            setLoading(true);
+
+        }
+        const response = await request.checkAvailability(backlinks);
+        setLoading(false);
+        if (response.status === 500) {
 
             setError("Sponsored post is not valid");
 
@@ -20,7 +27,7 @@ function LinkPoolButton({ text, backlinks }) {
                 setError(null);
             }, 3000);
         }
-        
+
 
         setKeywordsData(response.data);
 
@@ -31,8 +38,18 @@ function LinkPoolButton({ text, backlinks }) {
     return (
         <div className='result-and-btn'>
             <div className='linkpool-btn' onClick={handlePoolButton}>
-                {text}
+
+                {loading ? 'Scanning..' :  text }
+
             </div>
+
+            {loading && <FallingLines
+                color="#4fa94d"
+                width="50"
+                visible={true}
+                ariaLabel="falling-circles-loading"
+            />
+            }
             {
                 keywordsData.length > 0 &&
 

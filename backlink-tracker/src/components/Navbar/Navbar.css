@@ -1,0 +1,27 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.4rem;
+    /* border: 1px solid grey; */
+    /* background-color: white; */
+}
+
+.logo{
+
+    color: rgb(108, 116, 106);
+    font-size: larger;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.get-started{
+
+    font-size: large;
+    padding: 0.5rem;
+    border-radius: 2.5rem;
+    color: #ffff;
+    background-color: #27ae60;
+}

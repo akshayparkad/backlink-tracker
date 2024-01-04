@@ -71,28 +71,43 @@ function LinkTrackerSection() {
     const handleSubmitToPool = async (e) => {
 
         if (validateForm()) {
+
             const data = {
 
                 sponsoredLink: sponseredPost,
                 backlinks: inputFields.map(field => field.value)
             };
 
-            const response = await request.addLinks(data);
 
-            if (response.data.status == 'ok') {
-                setSuccess(true);
+            try {
+                const response = await request.addLinks(data);
 
-                setTimeout(() => {
-                    setSuccess(false);
-                }, 5000);
+                if (response && response.data && response.data.status === 'ok') {
+                    setSuccess(true);
 
-            } else {
-                setError(response.data.message)
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 5000);
+
+                } else {
+                    setError(response?.data?.message)
+                    setTimeout(() => {
+                        setError(null);
+                    }, 5000);
+                }
+
+            } catch (error) {
+
+                // Log the error for debugging purposes
+                console.error('An unexpected error occurred during the request:', error);
+
+                // Handle the error gracefully
+                setError('An unexpected error occurred');
+                
                 setTimeout(() => {
                     setError(null);
                 }, 5000);
             }
-
         }
     }
 

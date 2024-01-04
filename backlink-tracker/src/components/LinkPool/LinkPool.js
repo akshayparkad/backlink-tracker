@@ -16,7 +16,7 @@ function LinkPool() {
     const getAllLinks = async () => {
 
         const response = await request.getLinks();
-        setLinks(response.data);
+        setLinks(response?.data);
         console.log(links);
     }
 

@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:8000/api/";
+//const BASE_URL = "http://localhost:8000/api/";
+const BASE_URL = "http://192.168.1.7:8000/api/";
+
 axios.defaults.baseURL = BASE_URL;
 
 const request = {

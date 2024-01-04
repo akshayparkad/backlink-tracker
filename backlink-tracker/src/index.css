@@ -15,6 +15,12 @@ code {
     monospace;
 }
 
+::placeholder {
+
+  font-family: Space Grotesk,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+
+}
+
 h1, h2, h3, p, button {
   font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
