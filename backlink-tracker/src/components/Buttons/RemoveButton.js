@@ -5,15 +5,14 @@ import { DeleteContext } from '../../hooks/DeleteContext';
 
 function RemoveButton({ text, id, setDeleteStatus, deleteStatus }) {
 
-
   const {setDeleteStatusText} = useContext(DeleteContext);
 
   const buttonStyle = {
-    backgroundColor: 'red',
+    backgroundColor: '#E55B5B',
     padding: '0.7rem',
     borderRadius: '5px',
     fontWeight: 600,
-    color: '#fff',
+    color: '#ffff',
     border: 'none',
     cursor: 'pointer',
     transition: 'transform 0.3s ease',

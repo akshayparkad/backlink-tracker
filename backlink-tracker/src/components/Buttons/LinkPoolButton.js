@@ -29,12 +29,11 @@ function LinkPoolButton({ text, backlinks }) {
     }
 
     return (
-        <>
+        <div className='result-and-btn'>
             <div className='linkpool-btn' onClick={handlePoolButton}>
                 {text}
             </div>
             {
-
                 keywordsData.length > 0 &&
 
                 <>
@@ -42,14 +41,12 @@ function LinkPoolButton({ text, backlinks }) {
                     <p className='data-para-keywords'>Backlinks Found: {keywordsData.filter(keyword => keyword.found).length}</p>
                 </>
 
-
-
             }
 
             {error && <div className='error'>{error}</div>}
 
 
-        </>
+        </div>
 
 
     )

@@ -1,5 +1,4 @@
-.forms-and-btn-container{
-
+.forms-and-btn-container {
   background-color: rgb(255, 255, 255);
   padding: 1rem;
   width: 75%;
@@ -9,40 +8,39 @@
   margin-bottom: 2rem;
   border-radius: 0.7rem;
   border: 1px solid rgb(230, 227, 227);
-  
-
 }
 
-.all-forms{
+.all-forms {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-  
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.form-label{
+.form-label {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   margin-top: 3rem;
   /* border: 1px solid red; */
   gap: 10rem;
   color: #576366;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
-.submit-btn{
+.submit-btn {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
 }
 
-.right-label{
+.right-label {
   margin-right: 8rem;
 }
 
-.left-label{
+.left-label {
   margin-right: 7rem;
 }
 
@@ -56,10 +54,10 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 10px;
+  
 }
 
 .form-container button {
-  
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -71,15 +69,15 @@
 .removeButton {
   background: #a83015;
   margin-left: 3rem;
+  height: 3rem;
 }
 
 .addButton {
   background: #27ae60;
+  height: 3rem;
 }
 
-
-.subbtn{
-  
+.subbtn {
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -94,17 +92,15 @@
   gap: 6rem;
 }
 
-.left-box{
+.left-box {
   width: 30rem;
 }
 
-.right-box{
+.right-box {
   width: 30rem;
-  
 }
 
 input[type="text"] {
-  appearance: none;
   width: 100%;
   margin: 0 15px;
   height: 35px;
@@ -117,7 +113,7 @@ input[type="text"] {
   font-size: 14px;
 }
 
-.success{
+.success {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
@@ -125,11 +121,48 @@ input[type="text"] {
   font-weight: bold;
 }
 
-.error{
+.error {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
   color: rgb(236, 40, 40);
   font-weight: bold;
+}
+
+@media screen and (max-width: 1500px) {
+  .two-boxes {
+    flex-direction: column; /* Stack boxes vertically on smaller screens */
+    gap: 1rem;
+  }
+
+  .left-box,
+  .right-box {
+    width: 100%; /* Take up full width on smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .two-boxes {
+    flex-direction: column; /* Stack boxes vertically on smaller screens */
+    gap: 1rem;
+  }
+
+  .left-box,
+  .right-box {
+    width: 100%; /* Take up full width on smaller screens */
+  }
+}
+
+
+@media screen and (max-width: 553px) {
+  .two-boxes {
+    flex-direction: column; /* Stack boxes vertically on smaller screens */
+    gap: 1rem;
+  }
+
+  .left-box,
+  .right-box {
+    width: 75%; /* Take up full width on smaller screens */
+  }
 }
 

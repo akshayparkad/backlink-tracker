@@ -30,7 +30,7 @@ function LinkPool() {
     return (
         <div className='all-links'>
 
-            {links.map((item) => {
+            {links?.map((item) => {
 
                 return (
                     <>
