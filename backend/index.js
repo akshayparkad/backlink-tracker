@@ -10,12 +10,13 @@ const axios = require("axios")
 
 require('dotenv').config();
 
+const {OAuth2Client} = require('google-auth-library')
+
 mongoose.connect(process.env.MONGO_DB_URL);
 
 
 app.use(cors());
 app.use(express.json());
-
 
 app.post('/api/checkAvailability', async (req, res) => {
 
@@ -134,9 +135,43 @@ app.delete('/api/links/:id', async (req, res) => {
 });
 
 
+const nameRegex = /^([a-z]+(-| )?)+$/i;
+const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
 app.post('/api/register', async (req, res) => {
 
     try {
+
+        const { name, email, password } = req.body;
+
+          // Input validation
+          if (!name || !email || !password) {
+            return res.status(400).json({ status: 'error', message: 'All fields are required' });
+        }
+
+        // Validate name format
+        if (!nameRegex.test(name)) {
+            return res.status(400).json({ status: 'error', message: 'Invalid name format' });
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ status: 'error', message: 'Invalid email format' });
+        }
+
+        // Validate password strength
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Password must contain at least one digit, one special character, one lowercase and one uppercase letter, and be at least 8 characters long'
+            });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ status: 'error', message: 'Email is already registered' });
+        }
 
         const cryptedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -149,36 +184,53 @@ app.post('/api/register', async (req, res) => {
 
         res.json({ status: 'ok' })
 
-    } catch (err) {
+    } catch (error) {
 
-        res.json({ status: 'error' })
+        // Handle specific errors
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ status: 'error', message: 'Email is already registered' });
+        }
+
+        return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
     }
 
 })
 
 
 app.post('/api/login', async (req, res) => {
-    console.log(req.body);
 
+    try {
 
-    const user = await User.findOne({ email: req.body.email });
+        const { email, password } = req.body;
 
-    if (!user) {
-        return res.json({ status: 'error', error: 'Invalid Login' })
-    }
+        // Validate input
+        if (!email || !password) {
+            return res.status(400).json({ status: 'error', message: 'Email and password are required' });
+        }
 
-    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+        const user = await User.findOne({ email });
 
-    if (isPasswordValid) {
+        if (!user) {
+            return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
+        }
+        
+        const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        const token = jwt.sign({
-            name: req.body.name,
-            email: req.body.email,
-        }, 'secret123', { expiresIn: '24h' })
+        if (isPasswordValid) {
+            const token = jwt.sign({
+                name: user.name,
+                email: user.email,
+            },  process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        return res.json({ status: 'ok', user: { token, name: user.name } });
-    } else {
-        return res.json({ status: 'error', user: false })
+            return res.json({ status: 'ok', user: { token, name: user.name } });
+
+        } else {
+            return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
+        }
+
+    } catch (error) {
+        console.error('Login error:', error);
+        return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
     }
 })
 
