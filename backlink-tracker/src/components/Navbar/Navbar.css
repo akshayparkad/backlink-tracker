@@ -18,10 +18,19 @@
 }
 
 .get-started{
-
+    text-decoration: none;
     font-size: large;
     padding: 0.5rem;
     border-radius: 2.5rem;
     color: #ffff;
     background-color: #27ae60;
 }
+
+.get-started:hover{
+    cursor: pointer;
+}
+
+.get-started-link {
+    text-decoration: none;
+    color: white;
+  } 

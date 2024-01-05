@@ -1,15 +1,37 @@
+import { useState } from 'react';
 import './App.css';
 import DashboardSection from './components/Dashboard/DashboardSection';
+import Navbar from './components/Navbar/Navbar';
 import { DeleteProvider } from './hooks/DeleteContext';
+import { BrowserRouter as Router, Route, Switch, Routes } from 'react-router-dom';
+import Home from './components/Home/Home';
+import Registration from './components/Forms/Register';
+import { AuthProvider } from './context/AuthContext';
+import Login from './components/Forms/Login';
+
 
 function App() {
-  return (
-    <div>
-      <DeleteProvider>
-        <DashboardSection />
 
-      </DeleteProvider>
-    </div>
+  const [showDashboard, setShowDashboard] = useState(false);
+
+  const getStarted = () =>{
+      setShowDashboard(true);
+  }
+
+  return (
+    <Router>
+      <div>
+        <Navbar onGetStarted = {getStarted}/>
+        <DeleteProvider>
+        <Routes>
+         {showDashboard &&  <Route path="/dashboard" element={ <DashboardSection />} />}
+         <Route path="/" element={<Home />} />
+         <Route path="/register" element={<Registration />} />
+         <Route path="/login" element={<Login />} />
+         </Routes>
+        </DeleteProvider>
+      </div>
+    </Router>
   );
 }
 

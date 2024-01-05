@@ -46,6 +46,26 @@ const request = {
         }catch(error){
             return error.response;
         }
+    },
+
+    register: async(user) =>{
+        try{
+            const response = await axios.post('/register', user);
+            return response;
+            
+        }catch(error){
+            return error.response;
+        }       
+    },
+
+    login: async(user) =>{
+        try{
+            const response = await axios.post('/login', user);
+            return response;
+            
+        }catch(error){
+            return error.response;
+        }       
     }
 
 }

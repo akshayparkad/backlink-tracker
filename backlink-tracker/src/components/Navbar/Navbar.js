@@ -1,17 +1,17 @@
 import React from 'react'
 import './Navbar.css'
+import { Link } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({onGetStarted}) {
 
   return (
-
     <div className='navbar'>
         <div className='logo'>
             BL Tracker
         </div>
 
-        <div className='get-started'>
-            Get Started
+        <div className='get-started' onClick={onGetStarted}>
+           Get Started
         </div>
     </div>
   )

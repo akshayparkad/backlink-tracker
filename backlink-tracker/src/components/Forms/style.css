@@ -1,0 +1,78 @@
+.container-signup {
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;    
+    border: 1px solid red;
+    border-radius: 2rem;
+    border: 1px solid rgb(230, 227, 227);
+
+  }
+  
+  .container-signin {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+  }
+  
+
+  .login-link-signup {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .login-link-signup a {
+    color: #007bff;
+  }
+  
+  .signup-dropdown
+  {
+    cursor: pointer;
+    
+  }
+  
+  #fail-box-1{
+    
+    font-weight: 500;
+    color: rgb(254, 54, 54);
+    /* border: 1px solid green; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+}
+
+.container-signup input {
+    width: 100%;
+    margin: 10px 0 !important; /* Increase the top and bottom margin */
+    height: 35px;
+    padding: 5px 15px !important;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: #e8ebed;
+    color: #576366;
+    font-size: 14px;
+}
+
+.auth-btn{
+    justify-content: center;
+    text-decoration: none;
+    font-size: large;
+    padding: 0.5rem;
+    border-radius: 2.5rem;
+    color: #ffff;
+    background-color: #27ae60;
+    width: 40%;
+    border: none;
+    cursor: pointer;
+    margin-left: 6rem;
+}
+
+.text-danger{
+    color: red;
+}
