@@ -12,7 +12,6 @@ const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 router.post('/api/register', async (req, res) => {
 
     try {
-
         const { name, email, password } = req.body;
 
           // Input validation
@@ -46,14 +45,17 @@ router.post('/api/register', async (req, res) => {
 
         const cryptedPassword = await bcrypt.hash(req.body.password, 10);
 
+        const defaultTotalCredits = process.env.DEFAULT_CREDITS;
+
         await User.create({
 
             name: req.body.name,
             email: req.body.email,
-            password: cryptedPassword
+            password: cryptedPassword,
+            total_credits: defaultTotalCredits
         })
 
-        res.json({ status: 'ok' })
+        res.json({ status: 'ok' })  
 
     } catch (error) {
 
@@ -69,8 +71,7 @@ router.post('/api/register', async (req, res) => {
 
 
 router.post('/api/login', async (req, res) => {
-    
-        console.log(req.body);
+
     try {
 
         const { email, password } = req.body;
@@ -90,11 +91,13 @@ router.post('/api/login', async (req, res) => {
 
         if (isPasswordValid) {
             const token = jwt.sign({
+                userId: user._id,
                 name: user.name,
                 email: user.email,
+                total_credits: user.total_credits,
             },  process.env.JWT_SECRET, { expiresIn: '1h' });
 
-            return res.json({ status: 'ok', user: { token, name: user.name } });
+            return res.json({ status: 'ok', user: { token, name: user.name, total_credits: user.total_credits } });
 
         } else {
             return res.status(401).json({ status: 'error', message: 'Invalid credentials' });

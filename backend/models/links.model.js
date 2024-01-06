@@ -7,7 +7,9 @@ const Links = new mongoose.Schema({
             type: String,
             required: true
         },
-    ]
+    ],
+      // Reference to User model
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'UserData' }
 },
     {
         collection: 'link-data'
