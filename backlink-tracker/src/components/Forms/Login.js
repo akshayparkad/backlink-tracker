@@ -26,11 +26,13 @@ const Login = () => {
       const response = await request.login(data);
 
   
-        if (response?.data?.status === 'ok') {  
+        if (response.data.status === 'ok') {  
 
           sessionStorage.removeItem('token'); //removing already existed token in case use relogin
-          
-          _login(response.data.user.token, response.data.user.name); //adding to context
+
+          console.log(response.data.user);
+
+          _login(response.data.user); //adding to context
 
           // const name = {name: response.data.user.name}
 

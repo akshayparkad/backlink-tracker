@@ -23,6 +23,7 @@ function App() {
     <Router>
       <div>
         <Navbar onGetStarted = {getStarted}/>
+        
         <DeleteProvider>
         <Routes>
         <Route path="/dashboard" element={ <DashboardSection />} />

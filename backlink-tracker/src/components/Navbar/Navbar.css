@@ -21,11 +21,19 @@
     text-decoration: none;
     font-size: large;
     padding: 0.5rem;
-    /* border-radius: 2.5rem; */
     color: #ffff;
-    background-color: #aec7b8;
+    background-color: #686b67;
     margin-left: auto;
     margin-right: 2rem;
+}
+
+.credits{
+    text-decoration: none;
+    font-size: large;
+    padding: 0.5rem;
+    color: #ffff;
+    background-color: #7799e3;
+    margin-left:55%;
 }
 
 .get-started{
@@ -35,6 +43,7 @@
     border-radius: 2.5rem;
     color: #ffff;
     background-color: #27ae60;
+    
     
 }
 
@@ -46,3 +55,18 @@
     text-decoration: none;
     color: white;
   } 
+
+  /* Responsive styles using media queries */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .username, .credits, .get-started {
+        margin-top: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

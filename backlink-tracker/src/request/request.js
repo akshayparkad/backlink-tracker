@@ -1,13 +1,8 @@
 import axios from 'axios';
 
-//const BASE_URL = "http://localhost:8000/api/";
-const BASE_URL = "http://192.168.1.7:8000/api/";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 axios.defaults.baseURL = BASE_URL;
-const token = sessionStorage.getItem('jwt-token');
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = token;
-
 
 const request = {
 
@@ -15,8 +10,12 @@ const request = {
 
         try {
 
-            console.log(token);
-            const response = await axios.post('/addLinks', jsonData);
+            const response = await axios.post('/addLinks', jsonData,  {
+                headers :{
+                    "Authorization" : 'Bearer ' + sessionStorage.getItem('jwt-token'),
+                    'Content-Type' : 'application/json'
+                }
+            });
             return response;
 
         } catch (error) {
@@ -29,7 +28,12 @@ const request = {
     getLinks: async () => {
 
         try {
-            const response = await axios.get('/links');
+            const response = await axios.get('/linkById', {
+                headers :{
+                    "Authorization" : 'Bearer ' + sessionStorage.getItem('jwt-token'),
+                    'Content-Type' : 'application/json'
+                }
+            });
             return response;
         } catch (error) {
             return error.response;
@@ -39,7 +43,12 @@ const request = {
     deleteLink: async (id) => {
 
         try {
-            const response = await axios.delete(`/links/${id}`);
+            const response = await axios.delete(`/links/${id}`, {
+                headers :{
+                    "Authorization" : 'Bearer ' + sessionStorage.getItem('jwt-token'),
+                    'Content-Type' : 'application/json'
+                }
+            });
             return response;
         } catch (error) {
             return error.response;
@@ -48,7 +57,13 @@ const request = {
 
     checkAvailability: async (backlinks) => {
         try {
-            const response = await axios.post('/checkAvailability', backlinks);
+            const response = await axios.post('/checkAvailability', backlinks,{
+                headers :{
+                    "Authorization" : 'Bearer ' + sessionStorage.getItem('jwt-token'),
+                    'Content-Type' : 'application/json'
+                }
+            });
+
             return response;
         } catch (error) {
             return error.response;
