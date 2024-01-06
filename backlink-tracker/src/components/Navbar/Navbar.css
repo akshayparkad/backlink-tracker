@@ -17,6 +17,17 @@
     padding: 0.5rem;
 }
 
+.username {
+    text-decoration: none;
+    font-size: large;
+    padding: 0.5rem;
+    /* border-radius: 2.5rem; */
+    color: #ffff;
+    background-color: #aec7b8;
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
 .get-started{
     text-decoration: none;
     font-size: large;
@@ -24,6 +35,7 @@
     border-radius: 2.5rem;
     color: #ffff;
     background-color: #27ae60;
+    
 }
 
 .get-started:hover{

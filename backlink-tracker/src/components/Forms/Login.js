@@ -2,6 +2,7 @@ import "./style.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import request from "../../request/request";
+import { useAuth } from "../../context/AuthContext";
 
 
 const Login = () => {
@@ -11,6 +12,8 @@ const Login = () => {
     var [errorPassword, setPassword] = useState("");
     let [data, setData] = useState();
     const [regerror, setRegerror] = useState(null);
+
+    const { _login } = useAuth();
   
     var handleChange = (event) => {
       setData({ ...data, [event.target.name]: event.target.value });
@@ -22,21 +25,22 @@ const Login = () => {
 
       const response = await request.login(data);
 
-      console.log(response);
   
-        if (response.data.status === 'ok') {  
+        if (response?.data?.status === 'ok') {  
 
           sessionStorage.removeItem('token'); //removing already existed token in case use relogin
+          
+          _login(response.data.user.token, response.data.user.name); //adding to context
 
-          const name = {name: response.data.user.name}
+          // const name = {name: response.data.user.name}
 
-          sessionStorage.setItem('jwt-token', response.data.user.token);
+          //sessionStorage.setItem('jwt-token', response.data.user.token);
   
           setEmail("");
 
           setPassword("");
           //sessionStorage.setItem("jwtToken", "Bearer " + response.data.jwtToken);
-            navigate(`/dashboard`,{ state: name});
+            navigate('/dashboard');
          
         }else {
 

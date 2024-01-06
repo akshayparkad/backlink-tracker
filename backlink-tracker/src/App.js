@@ -19,19 +19,20 @@ function App() {
   }
 
   return (
+    <AuthProvider>
     <Router>
       <div>
         <Navbar onGetStarted = {getStarted}/>
         <DeleteProvider>
         <Routes>
-         {showDashboard &&  <Route path="/dashboard" element={ <DashboardSection />} />}
-         <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={ <DashboardSection />} />
          <Route path="/register" element={<Registration />} />
          <Route path="/login" element={<Login />} />
          </Routes>
         </DeleteProvider>
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 

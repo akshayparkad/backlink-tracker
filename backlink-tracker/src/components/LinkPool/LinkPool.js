@@ -17,7 +17,7 @@ function LinkPool() {
 
         const response = await request.getLinks();
         setLinks(response?.data);
-        console.log(links);
+        console.log(response);
     }
 
     useEffect(() => {

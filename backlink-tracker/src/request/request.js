@@ -4,14 +4,21 @@ import axios from 'axios';
 const BASE_URL = "http://192.168.1.7:8000/api/";
 
 axios.defaults.baseURL = BASE_URL;
+const token = sessionStorage.getItem('jwt-token');
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Authorization'] = token;
+
 
 const request = {
 
     addLinks: async (jsonData) => {
 
         try {
+
+            console.log(token);
             const response = await axios.post('/addLinks', jsonData);
             return response;
+
         } catch (error) {
             console.log(error);
             return error.response;
@@ -39,33 +46,34 @@ const request = {
         }
     },
 
-    checkAvailability: async(backlinks) =>{
+    checkAvailability: async (backlinks) => {
         try {
             const response = await axios.post('/checkAvailability', backlinks);
             return response;
-        }catch(error){
+        } catch (error) {
             return error.response;
         }
     },
 
-    register: async(user) =>{
-        try{
+    register: async (user) => {
+        try {
             const response = await axios.post('/register', user);
             return response;
-            
-        }catch(error){
+
+        } catch (error) {
             return error.response;
-        }       
+        }
     },
 
-    login: async(user) =>{
-        try{
+    login: async (user) => {
+        console.log(user);
+        try {
             const response = await axios.post('/login', user);
             return response;
-            
-        }catch(error){
+
+        } catch (error) {
             return error.response;
-        }       
+        }
     }
 
 }
