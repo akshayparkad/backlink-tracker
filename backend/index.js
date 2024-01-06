@@ -7,16 +7,26 @@ const Links = require('./models/links.model')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const axios = require("axios")
-
+const verifyToken = require('./middleware/verifyToken');
+const authRoutes = require('./routes/auth');
 require('dotenv').config();
 
-const {OAuth2Client} = require('google-auth-library')
+
+
+app.use(cors({ origin: '*' }));
+
 
 mongoose.connect(process.env.MONGO_DB_URL);
 
+// Handle preflight requests
+app.options('*', cors());
 
-app.use(cors());
+//convert to json
 app.use(express.json());
+
+
+app.use(authRoutes);
+
 
 app.post('/api/checkAvailability', async (req, res) => {
 
@@ -67,7 +77,7 @@ app.post('/api/checkAvailability', async (req, res) => {
 
 
 //add links to pool
-app.post('/api/addLinks', async (req, res) => {
+app.post('/api/addLinks', verifyToken,  async (req, res) => {
 
     console.log(req.body);
 
@@ -97,7 +107,7 @@ app.post('/api/addLinks', async (req, res) => {
 
 //get all links
 
-app.get('/api/links', async (req, res) => {
+app.get('/api/links', verifyToken, async (req, res) => {
 
     try {
         const allLinks = await Links.find();
@@ -113,7 +123,7 @@ app.get('/api/links', async (req, res) => {
 
 //delete link from the pool
 
-app.delete('/api/links/:id', async (req, res) => {
+app.delete('/api/links/:id', verifyToken, async (req, res) => {
 
     try {
 
@@ -135,122 +145,8 @@ app.delete('/api/links/:id', async (req, res) => {
 });
 
 
-const nameRegex = /^([a-z]+(-| )?)+$/i;
-const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-app.post('/api/register', async (req, res) => {
-
-    try {
-
-        const { name, email, password } = req.body;
-
-          // Input validation
-          if (!name || !email || !password) {
-            return res.status(400).json({ status: 'error', message: 'All fields are required' });
-        }
-
-        // Validate name format
-        if (!nameRegex.test(name)) {
-            return res.status(400).json({ status: 'error', message: 'Invalid name format' });
-        }
-
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ status: 'error', message: 'Invalid email format' });
-        }
-
-        // Validate password strength
-        if (!passwordRegex.test(password)) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Password must contain at least one digit, one special character, one lowercase and one uppercase letter, and be at least 8 characters long'
-            });
-        }
-
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ status: 'error', message: 'Email is already registered' });
-        }
-
-        const cryptedPassword = await bcrypt.hash(req.body.password, 10);
-
-        await User.create({
-
-            name: req.body.name,
-            email: req.body.email,
-            password: cryptedPassword
-        })
-
-        res.json({ status: 'ok' })
-
-    } catch (error) {
-
-        // Handle specific errors
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).json({ status: 'error', message: 'Email is already registered' });
-        }
-
-        return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
-    }
-
-})
-
-
-app.post('/api/login', async (req, res) => {
-
-    try {
-
-        const { email, password } = req.body;
-
-        // Validate input
-        if (!email || !password) {
-            return res.status(400).json({ status: 'error', message: 'Email and password are required' });
-        }
-
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
-        }
-        
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        if (isPasswordValid) {
-            const token = jwt.sign({
-                name: user.name,
-                email: user.email,
-            },  process.env.JWT_SECRET, { expiresIn: '1h' });
-
-            return res.json({ status: 'ok', user: { token, name: user.name } });
-
-        } else {
-            return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
-        }
-
-    } catch (error) {
-        console.error('Login error:', error);
-        return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
-    }
-})
-
-app.get('/api/verify', (req, res) => {
-
-    const token = req.headers.authorization;
-
-    if (!token) {
-        res.json({ status: 'error' });
-    }
-
-    jwt.verify(token, 'secret123', (err, decoded) => {
-        if (err) {
-            return res.json({ status: 'error', error: 'Invalid token' });
-        }
-
-        return res.json({ status: 'ok' });
-    });
-})
-
-app.listen(8000, () => {
-    console.log('Server Started on port ' + 8000);
+const port = process.env.PORT
+app.listen(port, () => {
+    console.log('Server Started on port ' + port);
 })
