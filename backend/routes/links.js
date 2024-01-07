@@ -1,6 +1,7 @@
 
 const express = require('express');
 const Links = require('../models/links.model')
+const User = require('../models/user.model')
 const axios = require("axios")
 const verifyToken = require('../middleware/verifyToken');
 const router = express.Router();
@@ -69,6 +70,14 @@ router.post('/api/addLinks', verifyToken,  async (req, res) => {
 
     console.log("id- " + userId);
 
+      // Fetch the user's current credits
+      const user = await User.findById(req.user.userId);
+
+    // Check if the user has enough credits to proceed
+     if (user.total_credits <= 0) {
+        return res.status(400).json({ status: 'error', message: 'Insufficient credits' });
+      }
+
     try {
         await Links.create({
 
@@ -77,7 +86,15 @@ router.post('/api/addLinks', verifyToken,  async (req, res) => {
             user: userId  
         })
 
-        res.json({ status: 'ok' })
+         // After successfully creating the link, update the user's total_credit field
+        await User.findByIdAndUpdate(userId, { $inc: { total_credits: -1 } });
+
+        // Fetch the updated credits
+        const updatedUser = await User.findById(req.user.userId);
+        const updatedCredits = updatedUser ? updatedUser.total_credits : 0;
+        
+
+        res.json({ status: 'ok', total_credits: updatedCredits })
 
     } catch (err) {
 
