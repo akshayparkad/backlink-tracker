@@ -25,8 +25,14 @@ export const AuthProvider = ({ children }) => {
     
   };
 
+  const _updateCredits = (newCredits) => {
+    sessionStorage.setItem('total_credits', newCredits);
+    console.log(newCredits);
+    setCredits(newCredits);
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, _login, _logout, username, credits}}>
+    <AuthContext.Provider value={{ isLoggedIn, _login, _logout, username, credits, _updateCredits}}>
       {children}
     </AuthContext.Provider>
   );

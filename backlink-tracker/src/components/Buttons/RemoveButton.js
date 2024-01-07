@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import request from '../../request/request';
 import { DeleteContext } from '../../hooks/DeleteContext';
+import './style.css'
 
 
 function RemoveButton({ text, id, setDeleteStatus, deleteStatus }) {
@@ -8,8 +9,8 @@ function RemoveButton({ text, id, setDeleteStatus, deleteStatus }) {
   const {setDeleteStatusText} = useContext(DeleteContext);
 
   const buttonStyle = {
-    backgroundColor: '#E55B5B',
-    padding: '0.7rem',
+    backgroundColor: 'rgb(238, 123, 123)',
+    padding: '0.4rem',
     borderRadius: '5px',
     fontWeight: 600,
     color: '#ffff',

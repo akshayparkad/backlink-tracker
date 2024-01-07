@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './LinkPoolButton.css'
+import './style.css'
 import request from '../../request/request'
 import { FallingLines } from 'react-loader-spinner'
 

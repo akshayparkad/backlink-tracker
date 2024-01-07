@@ -77,15 +77,7 @@
   height: 3rem;
 }
 
-.subbtn {
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  background: #27ae60;
-}
+
 
 .two-boxes {
   display: flex;
@@ -116,7 +108,7 @@ input[type="text"] {
 .success {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   color: green;
   font-weight: bold;
 }
@@ -124,7 +116,7 @@ input[type="text"] {
 .error {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   color: rgb(236, 40, 40);
   font-weight: bold;
 }

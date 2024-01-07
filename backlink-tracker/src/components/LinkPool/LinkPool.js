@@ -6,18 +6,25 @@ import request from '../../request/request';
 import { statusContext } from '../LinkTracker/LinkTrackerSection';
 import TruncateString from '../TruncateString/TruncateString';
 import { useAuth } from '../../context/AuthContext';
+import { FallingLines } from 'react-loader-spinner'
+
 
 
 function LinkPool() {
     const [links, setLinks] = useState([]);
     const [deleteStatus, setDeleteStatus] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const status = useContext(statusContext);
 
-    const {isLoggedIn} = useAuth();
+    const { isLoggedIn } = useAuth();
 
     const getAllLinks = async () => {
+        setIsLoading(true);
         try {
+
             const response = await request.getLinks();
+            setIsLoading(false);
             setLinks(response.data);
             console.log(response);
         } catch (error) {
@@ -27,32 +34,44 @@ function LinkPool() {
 
     useEffect(() => {
 
-            getAllLinks();
+        getAllLinks();
 
 
     }, [status, deleteStatus, isLoggedIn]);
 
     return (
-        
+
         <div className='all-links'>
-            {links.length > 0 ? (
-                links.map((item) => (
-                    <React.Fragment key={item._id}>
-                        <div className='link-container'>
-                            <div className='sponsored-link-single'>
-                                <TruncateString originalString={item.sponsoredLink} maxLength={50} />
+
+            {isLoading ? (
+            <div className='loading-container'>
+                <FallingLines
+                color="#4fa94d"
+                width="50"
+                visible={true}
+                ariaLabel="falling-circles-loading"
+            />
+            </div>
+
+            ) : links.length > 0 ? (
+
+                    links.map((item) => (
+                        <React.Fragment key={item._id}>
+                            <div className='link-container'>
+                                <div className='sponsored-link-single'>
+                                    <TruncateString originalString={item.sponsoredLink} maxLength={50} />
+                                </div>
+
+                                <LinkPoolButton text={'Check Availability'} backlinks={item} />
+
+                                <RemoveButton text={'Remove'} id={item._id} setDeleteStatus={setDeleteStatus} deleteStatus={deleteStatus} />
                             </div>
-
-                            <LinkPoolButton text={'Check Availability'} backlinks={item} />
-
-                            <RemoveButton text={'X'} id={item._id} setDeleteStatus={setDeleteStatus} deleteStatus={deleteStatus} />
-                        </div>
-                        <hr className='horizontal-line-betw-links' />
-                    </React.Fragment>
-                ))
-            ) : (
-                <p>No links available</p>
-            )}
+                            <hr className='horizontal-line-betw-links' />
+                        </React.Fragment>
+                    ))
+                ) : (
+                    <p>No links available</p>
+                )}
         </div>
     );
 }

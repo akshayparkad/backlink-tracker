@@ -1,7 +1,7 @@
 .linkpool-btn{
 
     border-radius: 5px;
-    padding: 0.7rem;
+    padding: 0.4rem;
     color: #27ae60;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -27,6 +27,16 @@
     align-items: center;
     gap: 1rem;
 }
+
+.subbtn {
+    color: white;
+    padding:0.5rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #27ae60;
+  }
 
 
 @media screen and (max-width: 818px) {

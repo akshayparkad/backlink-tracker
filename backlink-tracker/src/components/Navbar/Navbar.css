@@ -1,12 +1,11 @@
 .navbar{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
     padding: 0.4rem;
-    /* border: 1px solid grey; */
-    /* background-color: white; */
 }
 
 .logo{
@@ -57,16 +56,45 @@
   } 
 
   /* Responsive styles using media queries */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .navbar {
+        /* display: block; */
         flex-direction: column;
-        align-items: center;
+        text-align: center;
+    }
+
+    .username, .credits, .get-started {
+        font-size: small;
+        margin-top: 1rem;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1580px) {
+
+    .navbar {
+        flex-direction: row;
         text-align: center;
     }
 
     .username, .credits, .get-started {
         margin-top: 1rem;
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+}
+
+@media (max-width: 545px) {
+    .navbar {
+        display: block;
+        width: 50%;
+
+    }
+
+    .username, .credits, .get-started {
+        font-size: small;
+        margin-top: 1rem;
     }
 }

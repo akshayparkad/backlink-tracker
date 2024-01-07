@@ -1,10 +1,8 @@
 .link-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.791);
-  margin-top: 2rem;
   gap: 1rem;
   width: 90%;
   border-radius: 5px;
@@ -14,8 +12,7 @@
 
 .all-links {
   background-color: rgb(255, 255, 255);
-  padding: 1rem;
-  margin-top: 0.5rem;
+  padding: 0.3rem;
   width: 75%;
   margin-left: auto;
   margin-right: auto;
@@ -27,13 +24,19 @@
   width: auto;
   border: none;
   border-top: 1px dotted rgb(180, 178, 178);
-  
 }
 
 .sponsored-link-single{
     color: black;
     font-weight:500;
+}
 
+              
+.loading-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 
@@ -44,8 +47,17 @@
      flex-direction: column;
      gap: 0.5rem;
      padding: 0.1rem;
-     margin-top: 0.1rem;
   }
 
  
+}
+
+@media screen and (max-width: 556px) {
+  .sponsored-link-single {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%; /* Set a maximum width for the text */
+    word-wrap: break-word; /* Allow long words to break and wrap onto the next line */
+    overflow-wrap: break-word; /* Ensure that long words break at the end of a line if needed */
+  }
 }

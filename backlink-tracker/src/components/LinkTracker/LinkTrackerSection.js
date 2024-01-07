@@ -3,6 +3,8 @@ import './LinkTrackerSection.css'
 import LinkPool from '../LinkPool/LinkPool';
 import request from '../../request/request';
 import { DeleteContext } from '../../hooks/DeleteContext';
+import { useAuth } from '../../context/AuthContext';
+import LinkSubmitButton from '../Buttons/LinkSubmitButton';
 
 
 export const statusContext = createContext();
@@ -16,7 +18,7 @@ function LinkTrackerSection() {
     const [validationErrors, setValidationErrors] = useState({});
 
 
-
+    const { _updateCredits } = useAuth();
     const { deleteStatusText } = useContext(DeleteContext);
 
 
@@ -84,7 +86,8 @@ function LinkTrackerSection() {
 
                 if (response && response.data && response.data.status === 'ok') {
                     setSuccess(true);
-
+                    console.log(response);
+                    _updateCredits(response.data.total_credits);
                     setTimeout(() => {
                         setSuccess(false);
                     }, 5000);
@@ -103,7 +106,7 @@ function LinkTrackerSection() {
 
                 // Handle the error gracefully
                 setError('An unexpected error occurred');
-                
+
                 setTimeout(() => {
                     setError(null);
                 }, 5000);
@@ -117,7 +120,6 @@ function LinkTrackerSection() {
         return () => clearTimeout();
     }, [deleteStatusText]);
 
-    console.log(deleteStatusText);
 
     return (
         <>
@@ -176,9 +178,7 @@ function LinkTrackerSection() {
                 </div>
                 <div className='submit-btn'>
 
-                    <button type="button" className='subbtn' onClick={handleSubmitToPool}>
-                        Submit to Pool
-                    </button>
+                    <LinkSubmitButton children={handleSubmitToPool} />
 
                 </div>
 

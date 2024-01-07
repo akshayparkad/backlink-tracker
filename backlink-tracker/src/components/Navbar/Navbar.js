@@ -1,13 +1,13 @@
 import React from 'react'
 import './Navbar.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import Credits from '../Credits/Credits';
 
-function Navbar({ }) {
+function Navbar() {
 
-  const { isLoggedIn, _logout, username, credits } = useAuth();
+  const { isLoggedIn, _logout, username } = useAuth();
   const navigate = useNavigate();
-
 
   const habdleLoginLogout = () => {
 
@@ -32,8 +32,7 @@ function Navbar({ }) {
         BL Tracker
       </div>
 
-
-      {isLoggedIn && <div className='credits'> {`Free Credits - ${credits}`} </div>}
+      <Credits />
 
       { isLoggedIn &&<div className='username'>{`Howdy, ${username}`}</div>}
 
