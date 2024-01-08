@@ -3,6 +3,7 @@ import LinkTrackerSection from '../LinkTracker/LinkTrackerSection'
 import './DashboardSection.css'
 import { useAuth } from '../../context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import Sidebar from '../Sidebar/Sidebar';
 
 function DashboardSection() {
   
@@ -15,7 +16,12 @@ function DashboardSection() {
 
   return (
     <div className='dashboard-container'>
+      <div className='split-1'>
+      <Sidebar />
+      </div>
+      <div className='split-2'>
       <LinkTrackerSection />
+      </div>
     </div>
 
   )
