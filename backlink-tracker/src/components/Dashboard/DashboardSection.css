@@ -7,13 +7,14 @@ body{
 .dashboard-container{
 
     display: flex;
+    height: 100vh;
 }
 
-.split-1{
+/* .split-1{
 
     flex: 15%;
     border: 1px solid #ccc;
-  }
+  } */
 
   
 .split-2{
