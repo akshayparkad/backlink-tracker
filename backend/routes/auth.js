@@ -97,7 +97,7 @@ router.post('/api/login', async (req, res) => {
                 total_credits: user.total_credits,
             },  process.env.JWT_SECRET, { expiresIn: '1h' });
 
-            return res.json({ status: 'ok', user: { token, name: user.name, total_credits: user.total_credits } });
+            return res.json({ status: 'ok', user: { token, name: user.name, email: user.email, total_credits: user.total_credits } });
 
         } else {
             return res.status(401).json({ status: 'error', message: 'Invalid credentials' });

@@ -12,6 +12,13 @@ function isValidObjectId(id) {
     return mongoose.Types.ObjectId.isValid(id);
 }
 
+// Function to validate URL
+function isValidUrl(url) {
+    // This regex is a basic example, you may need to adjust it based on your requirements
+    const urlRegex = /^(http[s]?:\/\/)?[^\s(["<,>]*\.[^\s[",><]*$/;
+    return urlRegex.test(url);
+}
+
 
 router.post('/api/checkAvailability', verifyToken, async (req, res) => {
 
@@ -20,6 +27,7 @@ router.post('/api/checkAvailability', verifyToken, async (req, res) => {
 
         //get backlinks
         const backlinks_to_search = req.body.backlinks;
+
 
         if (!backlinks_to_search || !Array.isArray(backlinks_to_search) || backlinks_to_search.length === 0) {
             return res.status(400).json({ error: 'Invalid or missing keywords in the request body' });
@@ -53,7 +61,7 @@ router.post('/api/checkAvailability', verifyToken, async (req, res) => {
         res.json(results);
 
     } catch (error) {
-
+            console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 
@@ -68,20 +76,24 @@ router.post('/api/addLinks', verifyToken,  async (req, res) => {
 
     const userId = req.user.userId;
 
-    console.log("id- " + userId);
+    const sponsoredLink = req.body.sponsoredLink;
 
+     // Validate url_to_scrap
+     if (!isValidUrl(sponsoredLink)) {
+        return res.status(400).json({ error: 'Invalid URL' });
+    }
       // Fetch the user's current credits
       const user = await User.findById(req.user.userId);
 
     // Check if the user has enough credits to proceed
      if (user.total_credits <= 0) {
-        return res.status(400).json({ status: 'error', message: 'Insufficient credits' });
+        return res.status(400).json({ status: 'error', error: 'Insufficient credits' });
       }
 
     try {
         await Links.create({
 
-            sponsoredLink: req.body.sponsoredLink,
+            sponsoredLink: sponsoredLink,
             backlinks: req.body.backlinks,
             user: userId  
         })
@@ -102,10 +114,10 @@ router.post('/api/addLinks', verifyToken,  async (req, res) => {
 
         if (err.code === 11000 || err.code === 11001) {
             // MongoDB duplicate key error
-            res.status(400).json({ status: 'error', message: 'Duplicate link is not allowed' });
+            res.status(400).json({ status: 'error', error: 'Duplicate link is not allowed' });
         } else {
             // Other errors
-            res.status(500).json({ status: 'error', message: 'Internal server error' });
+            res.status(500).json({ status: 'error', error: 'Internal server error' });
         }
     }
 })
