@@ -2,10 +2,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
+    width: 83%;
     margin-left: auto;
-    margin-right: auto;
+    /* margin-right: auto; */
     padding: 0.4rem;
+    /* border: 1px solid red; */
 }
 
 .logo{
@@ -20,7 +21,7 @@
     text-decoration: none;
     font-size: large;
     padding: 0.5rem;
-    color: #ffff;
+    color: #ffff;   
     background-color: #686b67;
     margin-left: auto;
     margin-right: 2rem;

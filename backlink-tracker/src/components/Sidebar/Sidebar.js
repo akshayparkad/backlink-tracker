@@ -1,20 +1,23 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react"
 import { useContext, createContext, useState } from "react"
+import { useAuth } from "../../context/AuthContext"
 
 const SidebarContext = createContext()
 
 export default function Sidebar({ children }) {
+
+  const { username, email} = useAuth();
   const [expanded, setExpanded] = useState(true)
-  
+
+
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-rgb(248, 251, 248) border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
-            src="https://img.logoipsum.com/243.svg"
-            className={`overflow-hidden transition-all ${
-              expanded ? "w-32" : "w-0"
-            }`}
+            src="https://www.svgrepo.com/show/525982/link-circle.svg"
+            className={`overflow-hidden transition-all ${expanded ? "w-10  " : "w-0"
+              }`}
             alt=""
           />
           <button
@@ -27,7 +30,8 @@ export default function Sidebar({ children }) {
 
         <SidebarContext.Provider value={{ expanded }}>
           <ul className="flex-1 px-3">{children}</ul>
-        </SidebarContext.Provider>
+        </SidebarContext.Provider>  
+
 
         <div className="border-t flex p-3">
           <img
@@ -42,10 +46,15 @@ export default function Sidebar({ children }) {
           `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+              <h4 className="font-semibold">{username}</h4>
+              <span className="text-xs text-gray-600">{email}</span>
             </div>
+            
+
             <MoreVertical size={20} />
+
+
+
           </div>
         </div>
       </nav>
@@ -53,37 +62,42 @@ export default function Sidebar({ children }) {
   )
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, active, alert, onClick }) {
   const { expanded } = useContext(SidebarContext)
-  
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <li
-    
+
       className={`
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
         transition-colors group
 
-        ${
-          active
-            ? "bg-gradient-to-tr from-green-100 to-green-100 text-gray-800"
-            : "hover:bg-green-50 text-gray-600"
+        ${active
+          ? "bg-gradient-to-tr from-green-100 to-green-100 text-gray-800"
+          : "hover:bg-green-50 text-gray-600"
         }
     `}
+
+    onClick={handleClick}
     >
       {icon}
       <span
-        className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0"
-        }`}
+        className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
+          }`}
       >
         {text}
       </span>
       {alert && (
         <div
-          className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${
-            expanded ? "" : "top-2"
-          }`}
+          className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"
+            }`}
         />
       )}
 

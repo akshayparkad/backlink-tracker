@@ -10,25 +10,6 @@
   border: 1px solid rgb(230, 227, 227);
 }
 
-.all-forms {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.form-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 3rem;
-  /* border: 1px solid red; */
-  gap: 10rem;
-  color: #576366;
-  font-weight: bold;
-}
 
 .submit-btn {
   display: flex;
@@ -44,11 +25,11 @@
   margin-right: 7rem;
 }
 
-.form-container {
+/* .form-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
+} */
 
 .input-row {
   display: flex;
@@ -81,14 +62,20 @@
 
 .two-boxes {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 6rem;
 }
 
 .left-box {
+  display: flex;
+  align-items: center;
   width: 30rem;
 }
 
 .right-box {
+  display: flex;
+  align-items: center;
   width: 30rem;
 }
 

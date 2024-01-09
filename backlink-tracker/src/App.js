@@ -22,7 +22,7 @@ function App() {
     <AuthProvider>
     <Router>
       <div>
-        <Navbar onGetStarted = {getStarted}/>
+        {/* <Navbar onGetStarted = {getStarted}/> */}
         
         <DeleteProvider>
         <Routes>

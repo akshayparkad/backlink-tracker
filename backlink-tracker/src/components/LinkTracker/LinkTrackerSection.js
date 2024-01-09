@@ -5,6 +5,8 @@ import request from '../../request/request';
 import { DeleteContext } from '../../hooks/DeleteContext';
 import { useAuth } from '../../context/AuthContext';
 import LinkSubmitButton from '../Buttons/LinkSubmitButton';
+import { Link } from "lucide-react"
+
 
 
 export const statusContext = createContext();
@@ -93,7 +95,8 @@ function LinkTrackerSection() {
                     }, 5000);
 
                 } else {
-                    setError(response?.data?.message)
+
+                    setError(response.data.error)
                     setTimeout(() => {
                         setError(null);
                     }, 5000);
@@ -125,10 +128,11 @@ function LinkTrackerSection() {
         <>
             <div className='forms-and-btn-container'>
 
-                <div className='all-forms'>
 
                     <div className='two-boxes'>
+                        
                         <div className='left-box'>
+                         <Link size={20}/>
                             <input
                                 type="text"
                                 placeholder="Sponsored post"
@@ -147,6 +151,8 @@ function LinkTrackerSection() {
                                 <div key={index} className="input-row">
 
                                     <div className='right-box'>
+                                    <Link size={20}/>
+                                    <Link size={20}/>
                                         <input
                                             type="text"
                                             placeholder="Backlinks to check in sponsored post"
@@ -175,7 +181,6 @@ function LinkTrackerSection() {
                             ))}
                         </div>
                     </div>
-                </div>
                 <div className='submit-btn'>
 
                     <LinkSubmitButton children={handleSubmitToPool} />

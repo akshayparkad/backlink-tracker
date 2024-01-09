@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('jwt-token'));
   const [username, setUsername] = useState(sessionStorage.getItem('username') || '');
   const [credits, setCredits] = useState(sessionStorage.getItem('total_credits') || '');
+  const [email, setEmail] = useState(sessionStorage.getItem('email') || '');
 
 
   const _login = (userdata) => {
@@ -17,6 +18,10 @@ export const AuthProvider = ({ children }) => {
     setUsername(userdata.name);
     sessionStorage.setItem('total_credits', userdata.total_credits);
     setCredits(userdata.total_credits);
+    sessionStorage.setItem('email', userdata.email);
+    setEmail(userdata.email);
+
+    console.log(userdata);
   };
 
   const _logout = () => {
@@ -32,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, _login, _logout, username, credits, _updateCredits}}>
+    <AuthContext.Provider value={{ isLoggedIn, _login, _logout, username, credits, _updateCredits, email}}>
       {children}
     </AuthContext.Provider>
   );
